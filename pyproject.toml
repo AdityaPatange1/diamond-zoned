@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "diamond-zoned"
+version = "0.1.0"
+description = "LLM-assisted checks of user text against Diamond Sutra themes via Ollama (thinking mode)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Aditya Patange" }]
+dependencies = [
+    "httpx>=0.27.0,<1.0.0",
+]
+
+[project.scripts]
+diamond-certify = "diamond_zoned.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.6.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["diamond_zoned*"]
+
+[tool.setuptools.package-data]
+diamond_zoned = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
