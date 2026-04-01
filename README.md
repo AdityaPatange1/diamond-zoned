@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repository ships a Python package that calls a local [Ollama](https://ollama.com/) chat model with **thinking / reasoning** enabled (`think` on the `/api/chat` endpoint) and asks the model to judge whether arbitrary user text is **thematically compatible** with principles commonly read from the *Diamond Sutra* (Vajracchedikā Prajñāpāramitā). The program emits a structured boolean `certified` plus supporting fields.
+This repository ships a Python package that calls a local [Ollama](https://ollama.com/) chat model with **thinking / reasoning** enabled (`think` on the `/api/chat` endpoint) and asks the model to judge whether arbitrary user text is **thematically compatible** with principles commonly read from the _Diamond Sutra_ (Vajracchedikā Prajñāpāramitā). The program emits a structured boolean `certified` plus supporting fields.
 
 ## Facts and limits
 
@@ -29,15 +29,15 @@ pip install -e .
 
 ## Environment variables
 
-| Variable | Default | Meaning |
-|----------|---------|---------|
-| `OLLAMA_HOST` | `http://127.0.0.1:11434` | Ollama base URL (`http` or `https` only). |
-| `OLLAMA_MODEL` | `deepseek-r1` | Model name known to Ollama. |
-| `OLLAMA_THINK` | `true` | When true, sends `think: true` (or level below). Set to `false` to disable. |
-| `OLLAMA_THINK_LEVEL` | unset | If set to `low`, `medium`, or `high`, sent as `think` value (for gpt-oss). |
-| `OLLAMA_TIMEOUT_S` | `120` | HTTP timeout seconds (minimum 5). |
-| `OLLAMA_MAX_RETRIES` | `2` | Retries after transport failures (0–5). |
-| `DIAMOND_MAX_INPUT_CHARS` | `16000` | Maximum user text length after strip (minimum 256 enforced in code). |
+| Variable                  | Default                  | Meaning                                                                     |
+| ------------------------- | ------------------------ | --------------------------------------------------------------------------- |
+| `OLLAMA_HOST`             | `http://127.0.0.1:11434` | Ollama base URL (`http` or `https` only).                                   |
+| `OLLAMA_MODEL`            | `deepseek-r1`            | Model name known to Ollama.                                                 |
+| `OLLAMA_THINK`            | `true`                   | When true, sends `think: true` (or level below). Set to `false` to disable. |
+| `OLLAMA_THINK_LEVEL`      | unset                    | If set to `low`, `medium`, or `high`, sent as `think` value (for gpt-oss).  |
+| `OLLAMA_TIMEOUT_S`        | `120`                    | HTTP timeout seconds (minimum 5).                                           |
+| `OLLAMA_MAX_RETRIES`      | `2`                      | Retries after transport failures (0–5).                                     |
+| `DIAMOND_MAX_INPUT_CHARS` | `16000`                  | Maximum user text length after strip (minimum 256 enforced in code).        |
 
 ## Module layout
 
@@ -59,7 +59,7 @@ diamond_zoned/
 CLI (after `pip install -e .`):
 
 ```bash
-export OLLAMA_MODEL=deepseek-r1
+export OLLAMA_MODEL=gpt-oss
 echo "Compassion without clinging to a fixed self-nature." | diamond-certify --pretty --show-thinking
 ```
 
