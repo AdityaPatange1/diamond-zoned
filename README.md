@@ -52,6 +52,7 @@ diamond_zoned/
   models.py         # Result dataclasses
   ollama_client.py  # HTTP client for /api/chat
   prompts.py        # System prompt and user wrapper (review criteria)
+  questionnaire.py  # Twelve-question monastic self-report and dossier builder
 ```
 
 ## Usage
@@ -64,6 +65,16 @@ echo "Compassion without clinging to a fixed self-nature." | diamond-certify --p
 ```
 
 Stdin is UTF-8 text. Exit codes: `0` success, `2` validation, `3` Ollama transport, `4` parse/schema.
+
+### Monastic questionnaire (`--questionnaire`)
+
+`diamond-certify --questionnaire` runs twelve fixed prompts (one line of input per prompt). Answers are assembled into a dossier, sent through the same Ollama certification path as single-shot mode, and written as JSON under `outputs/` (override with `--output-dir`). The same payload is printed to stdout. A line such as `wrote outputs/diamond_questionnaire_….json` is printed to stderr.
+
+Per-answer length is capped so the full dossier stays within `DIAMOND_MAX_INPUT_CHARS`. If that limit is too low for the questionnaire template, the program exits with a validation error until you raise the variable.
+
+```bash
+diamond-certify --questionnaire --pretty --show-thinking
+```
 
 Library:
 

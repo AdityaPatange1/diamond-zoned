@@ -6,6 +6,7 @@ import sys
 
 from diamond_zoned.certifier import certify
 from diamond_zoned.config import Settings
+from diamond_zoned.questionnaire import run_questionnaire
 from diamond_zoned.exceptions import (
     CertificationParseError,
     DiamondZonedError,
@@ -34,6 +35,16 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Pretty-print JSON to stdout.",
     )
+    p.add_argument(
+        "--questionnaire",
+        action="store_true",
+        help="Run the twelve-question monastic self-report quiz, certify the dossier, write JSON under outputs/.",
+    )
+    p.add_argument(
+        "--output-dir",
+        default="outputs",
+        help="Directory for --questionnaire JSON artifacts (default: outputs).",
+    )
     return p
 
 
@@ -41,6 +52,22 @@ def main(argv: list[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
     try:
         settings = Settings.from_environ()
+        if args.questionnaire:
+            if args.input is not None:
+                raise ValidationError("--questionnaire cannot be used with --input.")
+
+            path, payload = run_questionnaire(
+                settings=settings,
+                output_dir=args.output_dir,
+                include_thinking=args.show_thinking,
+            )
+            print(f"wrote {path}", file=sys.stderr)
+            dump_kw: dict[str, object] = {"ensure_ascii": False}
+            if args.pretty:
+                dump_kw["indent"] = 2
+            print(json.dumps(payload, **dump_kw))
+            return 0
+
         if args.input is not None:
             text = args.input
         else:
